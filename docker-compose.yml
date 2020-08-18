@@ -3,6 +3,7 @@ version: '3'
 services:
   db:
     image: postgres
+    restart: always
     environment:
       POSTGRES_DB: concourse
       POSTGRES_USER: concourse_user
@@ -16,6 +17,7 @@ services:
   web:
     image: concourse/concourse
     command: web
+    restart: always
     links: [db]
     depends_on: [db]
     ports: ["8888:8080"]
@@ -37,6 +39,7 @@ services:
   worker:
     image: concourse/concourse
     command: worker
+    restart: always
     privileged: true
     depends_on: [web]
     volumes: ["./keys/worker:/concourse-keys"]
